@@ -36,7 +36,8 @@ IF(${ROOT_found_version} LESS 60000)
 	MESSAGE(FATAL_ERROR "GenFit requires a ROOT version > 6.00.00")
 ENDIF()
 
-FIND_PACKAGE(Eigen3 REQUIRED)
+#FIND_PACKAGE(Eigen3 REQUIRED)
+INCLUDE_DIRECTORIES($ENV{E1039_SHARE}/include)
 
 # either, the environment variable RAVEPATH has to be specified, and RAVE's RaveConfig.cmake will be used to determine everything we need
 # or, Rave_LDFLAGS, Rave_INCLUDE_DIRS and Rave_CFLAGS have to be set via the command-line
