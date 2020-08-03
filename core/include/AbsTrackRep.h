@@ -295,6 +295,8 @@ class AbsTrackRep : public TObject {
 
   //! Get stepsizes and material properties of crossed materials of the last extrapolation.
   virtual std::vector<genfit::MatStep> getSteps() const = 0;
+  virtual std::vector<TVector3> getPosSteps() const = 0;
+  virtual std::vector<TVector3> getMomSteps() const = 0;
 
   //! Get the accumulated X/X0 (path / radiation length) of the material crossed in the last extrapolation.
   virtual double getRadiationLenght() const = 0;
