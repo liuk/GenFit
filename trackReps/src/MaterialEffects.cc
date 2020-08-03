@@ -484,7 +484,13 @@ double MaterialEffects::dEdxBetheBloch(double betaSquare, double gamma, double g
   double massRatio( me_ / mass_ );
   double argument( gammaSquare * betaSquare * me_ * 1.E3 * 2. / ((1.E-6 * mEE_) *
       sqrt(1. + 2. * gamma * massRatio + massRatio * massRatio)) );
-  result *= log(argument) - betaSquare; // Bethe-Bloch [MeV/cm]
+  double mom = gamma*mass_*sqrt(betaSquare);
+  double density_correction = 0; // 0 unless Z=26 (Fe) at present.
+  if (fabs(matZ_ - 26.) < 1.E-3) {
+    double logterm = log10(mom/mass_);
+    density_correction = 0.5*(2.*2.303*logterm - 4.2991 + 0.1468*pow((3.1531-logterm), 2.9632));
+  }
+  result *= log(argument) - betaSquare - density_correction; // Bethe-Bloch [MeV/cm]
   result *= 1.E-3;  // in GeV/cm, hence 1.e-3
   if (result < 0.) {
     result = 0;

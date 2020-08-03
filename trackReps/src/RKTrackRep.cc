@@ -1057,6 +1057,43 @@ std::vector<genfit::MatStep> RKTrackRep::getSteps() const {
   return retVal;
 }
 
+std::vector<TVector3> RKTrackRep::getPosSteps() const {
+  // -- added by liuk 2020.8.2
+
+  if (RKSteps_.size() == 0) {
+    Exception exc("RKTrackRep::getSteps ==> cache is empty.",__LINE__,__FILE__);
+    throw exc;
+  }
+
+  std::vector<TVector3> retVal;
+  retVal.reserve(RKSteps_.size());
+
+  for (unsigned int i = 0; i<RKSteps_.size(); ++i) {
+    retVal.push_back(TVector3(RKSteps_[i].state7_[0], RKSteps_[i].state7_[1], RKSteps_[i].state7_[2]));
+  }
+
+  return retVal;
+}
+
+std::vector<TVector3> RKTrackRep::getMomSteps() const {
+  // -- added by liuk 2020.8.2
+
+  if (RKSteps_.size() == 0) {
+    Exception exc("RKTrackRep::getSteps ==> cache is empty.",__LINE__,__FILE__);
+    throw exc;
+  }
+
+  std::vector<TVector3> retVal;
+  retVal.reserve(RKSteps_.size());
+
+  for (unsigned int i = 0; i<RKSteps_.size(); ++i) {
+    double p = fabs(1./RKSteps_[i].state7_[6]);
+    retVal.push_back(TVector3(RKSteps_[i].state7_[3]*p, RKSteps_[i].state7_[4]*p, RKSteps_[i].state7_[5]*p));
+  }
+
+  return retVal;
+}
+
 
 double RKTrackRep::getRadiationLenght() const {
 
