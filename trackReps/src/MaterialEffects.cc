@@ -459,6 +459,13 @@ double MaterialEffects::dEdx(double Energy) {
   }
 
   double result(0);
+  if(fabs(matZ_ - 26.) < 1.E-3) {
+    double logp = log(mom);
+    double a0 = 9.72E-3 - 2.37E-4*logp - 7.1E-6*mom;
+    double a1 = 5.86E-4 + 1.32E-4*logp + 1.92E-6*mom;
+    result = (a0 + a1*log(stepSize_))/stepSize_;
+    return result;
+  }
 
   if (energyLossBetheBloch_)
     result += dEdxBetheBloch(betaSquare, gamma, gammaSquare);
