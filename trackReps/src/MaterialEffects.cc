@@ -459,13 +459,6 @@ double MaterialEffects::dEdx(double Energy) {
   }
 
   double result(0);
-  if(fabs(matZ_ - 26.) < 1.E-3) {
-    double logp = log(mom);
-    double a0 = 9.72E-3 - 2.37E-4*logp - 7.1E-6*mom;
-    double a1 = 5.86E-4 + 1.32E-4*logp + 1.92E-6*mom;
-    result = (a0 + a1*log(stepSize_))/stepSize_;
-    return result;
-  }
 
   if (energyLossBetheBloch_)
     result += dEdxBetheBloch(betaSquare, gamma, gammaSquare);
@@ -493,9 +486,23 @@ double MaterialEffects::dEdxBetheBloch(double betaSquare, double gamma, double g
       sqrt(1. + 2. * gamma * massRatio + massRatio * massRatio)) );
   double mom = gamma*mass_*sqrt(betaSquare);
   double density_correction = 0; // 0 unless Z=26 (Fe) at present.
-  if (fabs(matZ_ - 26.) < 1.E-3) {
-    double logterm = log10(mom/mass_);
-    density_correction = 0.5*(2.*2.303*logterm - 4.2991 + 0.1468*pow((3.1531-logterm), 2.9632));
+  if (fabs(matZ_ - 26.) < 1.E-3 && abs(pdg_) == 13) {
+    //Abi's old parameterization - seems slightly higher
+    // double logterm = log10(mom/mass_);
+    // density_correction = 0.5*(2.*2.303*logterm - 4.2991 + 0.1468*pow((3.1531-logterm), 2.9632));
+    // std::cout << mom << "  " << pdg_ << "  " << stepSize_ << " : " << result*(log(argument) - betaSquare - density_correction)/1.E3 << "  ";
+    
+    //Parameterization from Atlas note - smaller than Abi's, seems quite close
+    double logp = log(mom);
+    // double a0 =  2.3E-2 - 5.6E-4*logp - 1.39E-5*mom;
+    // double a1 = -5.3E-4 + 3.9E-4*logp + 5.3E-6*mom;
+    // result = (a0 + a1*log(198.*2.54/1.757/1.757))/1.757;
+    // std::cout << result << "  ";
+
+    //My own parameterization 
+    result = 1.25E-2 + 6.04E-4*logp + 1.58E-5*pow(mom, 0.91);
+    //std::cout << result << std::endl;
+    return result;
   }
   result *= log(argument) - betaSquare - density_correction; // Bethe-Bloch [MeV/cm]
   result *= 1.E-3;  // in GeV/cm, hence 1.e-3
