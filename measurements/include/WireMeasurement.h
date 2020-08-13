@@ -90,7 +90,7 @@ class WireMeasurement : public AbsMeasurement {
   virtual bool isLeftRightMeasurement() const override {return true;}
   virtual int getLeftRightResolution() const override {return leftRight_;}
 
-  double getMaxDistance(){return maxDistance_;}
+  double getMaxDistance() const {return maxDistance_;}
 
  protected:
 
