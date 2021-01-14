@@ -139,14 +139,15 @@ void DAF::processTrackWithRep(Track* tr, const AbsTrackRep* rep, bool resortHits
       }
       lastPval = status->getBackwardPVal();
     } catch(Exception& e) {
-      errorOut<<e.what();
-      e.info();
+      //errorOut<<e.what();
+      //e.info();
       //errorOut << "calc weights failed" << std::endl;
       //mini_trk->getTrackRep(0)->setStatusFlag(1);
       status->setIsFitted(false);
       status->setIsFitConvergedFully(false);
       status->setIsFitConvergedPartially(false);
-      break;
+      throw e;
+      //break;
     }
 
     // check if converged

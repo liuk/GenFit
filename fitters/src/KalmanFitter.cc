@@ -274,12 +274,13 @@ void KalmanFitter::processTrackWithRep(Track* tr, const AbsTrackRep* rep, bool)
       }
     }
     catch(Exception& e) { // should not happen, but I leave it in for safety
-      errorOut << e.what();
+      //errorOut << e.what();
       status->setIsFitted(false);
       status->setIsFitConvergedFully(false);
       status->setIsFitConvergedPartially(false);
       status->setNFailedPoints(std::max(nFailedHitsForward, nFailedHitsBackward));
-      return;
+      throw e;
+      //return;
     }
   }
 
