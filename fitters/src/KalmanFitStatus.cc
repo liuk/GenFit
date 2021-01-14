@@ -37,7 +37,7 @@ void KalmanFitStatus::Print(const Option_t*) const
     printOut << "fNdf = " << fNdf_ << ", ";
     printOut << "bNdf = " << FitStatus::getNdf() << ", ";
     printOut << "fPVal = " << getForwardPVal() << ", ";
-    printOut << "bPVal = " << getBackwardPVal() << "\n";
+    printOut << "bPVal = " << getBackwardPVal() << ".";
   }
   printOut << "\n";
 }

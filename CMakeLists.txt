@@ -36,7 +36,8 @@ IF(${ROOT_found_version} LESS 60000)
 	MESSAGE(FATAL_ERROR "GenFit requires a ROOT version > 6.00.00")
 ENDIF()
 
-FIND_PACKAGE(Eigen3 REQUIRED)
+#FIND_PACKAGE(Eigen3 REQUIRED)
+set(EIGEN3_INCLUDE_DIR $ENV{E1039_SHARE}/include)
 
 # either, the environment variable RAVEPATH has to be specified, and RAVE's RaveConfig.cmake will be used to determine everything we need
 # or, Rave_LDFLAGS, Rave_INCLUDE_DIRS and Rave_CFLAGS have to be set via the command-line
@@ -69,7 +70,7 @@ IF(DEFINED RAVE)
 
 	SET (CMAKE_CXX_FLAGS ${Rave_DEFINITIONS} ${Rave_CFLAGS_STR})
 	SET(GF_INC_DIRS
-		./GFRave/include/ ${Rave_INCLUDE_DIRS_STR}
+		./GFRave/include/
 	)
 	
 	AUX_SOURCE_DIRECTORY( ./GFRave/src  library_sources )
@@ -100,8 +101,7 @@ IF(NOT CMAKE_BUILD_TYPE)
 ENDIF(NOT CMAKE_BUILD_TYPE)
 
 SET(CPP_STANDARD c++11)
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=${CPP_STANDARD} -pthread -Wpedantic -Wall -Wextra \
- -Wno-long-long -Wshadow -Werror=overloaded-virtual -Wunused-parameter -Waddress")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=${CPP_STANDARD} -pthread -Wpedantic -Wall -Wextra -Wno-long-long -Wshadow -Werror=overloaded-virtual -Wunused-parameter -Waddress")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -O0 -g")
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O3")

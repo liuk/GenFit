@@ -163,6 +163,8 @@ class RKTrackRep : public AbsTrackRep {
   virtual void getBackwardJacobianAndNoise(TMatrixD& jacobian, TMatrixDSym& noise, TVectorD& deltaState) const override;
 
   std::vector<genfit::MatStep> getSteps() const override;
+  std::vector<TVector3> getPosSteps() const override;
+  std::vector<TVector3> getMomSteps() const override;
 
   virtual double getRadiationLenght() const override;
 

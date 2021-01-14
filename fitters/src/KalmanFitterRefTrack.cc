@@ -279,7 +279,7 @@ void KalmanFitterRefTrack::processTrackWithRep(Track* tr, const AbsTrackRep* rep
       }
     }
     catch(Exception& e) {
-      errorOut << e.what();
+      //errorOut << e.what();
       status->setIsFitted(false);
       status->setIsFitConvergedFully(false);
       status->setIsFitConvergedPartially(false);
@@ -287,7 +287,8 @@ void KalmanFitterRefTrack::processTrackWithRep(Track* tr, const AbsTrackRep* rep
       if (debugLvl_ > 0) {
         status->Print();
       }
-      return;
+      throw e;
+      //return;
     }
 
   }
