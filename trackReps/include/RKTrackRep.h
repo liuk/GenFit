@@ -138,6 +138,8 @@ class RKTrackRep : public AbsTrackRep {
       bool stopAtBoundary = false,
       bool calcJacobianNoise = false) const override;
 
+  //@Get the jacobian between two extrapolating plane (added by Abi for E1039)
+  virtual TMatrixD getJacobian() const override {return fJacobian_;}
 
   unsigned int getDim() const override {return 5;}
 

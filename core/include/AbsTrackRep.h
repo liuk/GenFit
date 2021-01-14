@@ -274,6 +274,10 @@ class AbsTrackRep : public TObject {
   //! Get the charge of the particle of the pdg code
   double getPDGCharge() const;
 
+
+  //! Get the jacobian between two extrapolating plane (added by Abi for E1039)
+  virtual TMatrixD getJacobian() const = 0;
+
   /**
    * @brief Get the (fitted) charge of a state.
    * This is not always equal the pdg charge (e.g. if the charge sign was flipped during the fit).
