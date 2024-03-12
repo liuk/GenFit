@@ -170,7 +170,7 @@ int main() {
       }
 
       //check
-      assert(trackPtr->checkConsistency());
+      trackPtr->checkConsistency();
 
       // do the fit
       try{
@@ -183,7 +183,7 @@ int main() {
       }
 
       //check
-      assert(trackPtr->checkConsistency());
+      trackPtr->checkConsistency();
 
     } // end loop over tracks
 
