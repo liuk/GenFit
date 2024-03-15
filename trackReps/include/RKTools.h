@@ -26,12 +26,19 @@
 
 #include <stddef.h>
 #include <algorithm>
+#include <initializer_list>
 
 namespace genfit {
 
 template <size_t nRows, size_t nCols>
 struct RKMatrix {
   double vals[nRows * nCols];
+
+  RKMatrix() = default;
+  RKMatrix(const RKMatrix&) = default;
+  RKMatrix(std::initializer_list<double> initList) {
+    std::copy(initList.begin(), initList.end(), vals);
+  };
 
   double& operator()(size_t iRow, size_t iCol) {
     return vals[nCols*iRow + iCol];
@@ -42,10 +49,12 @@ struct RKMatrix {
   const double& operator[](size_t n) const {
     return vals[n];
   }
+
   double* begin() { return vals; }
   double* end() { return vals + nRows * nCols; }
   const double* begin() const { return vals; }
   const double* end() const { return vals + nRows * nCols; }
+
   RKMatrix<nRows, nCols>& operator=(const RKMatrix<nRows, nCols>& o) {
     std::copy(o.begin(), o.end(), this->begin());
     return *this;
